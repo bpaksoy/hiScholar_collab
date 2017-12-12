@@ -5,11 +5,15 @@ import Footer from "./components/Footer";
 import Main from  "./components/Main";
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import Signin from "./components/Signin";
+import Profile from "./components/Profile";
 
 class App extends Component {
   constructor(props){
     super(props);
-    this.state={users:[]}
+    this.state={
+      users:[],
+      userInfo: []
+    }
   }
 
 
@@ -19,12 +23,8 @@ class App extends Component {
      const users =  await requestMessages.json()
 
      this.setState({users: users})
-     let users1= this.state.users;
-     console.log("App.js users ", users1);
 
  }
-
-
 
 
  getUser = (username) => {
@@ -38,12 +38,32 @@ class App extends Component {
   }
     fetch("http://localhost:5050/users/" + id + "/profile")
     .then(response => response.json())
-       .then(user => console.log(user))
+       .then(user => {console.log(user)
+        this.setState({userInfo: user})
+        console.log("this.state.userInfo", this.state.userInfo);
+     })
 
   }
 
 
   render() {
+    console.log("this.state.userInfo", this.state.userInfo);
+    if(this.state.userInfo.length){
+      return(
+        <div className="App Site">
+            <div className="Site-content">
+              <div className="App-header">
+                <Header/>
+              </div>
+                <div className="main">
+                  <Main />
+                </div>
+                 <Profile user={this.state.userInfo}/>
+            </div>
+          <Footer/>
+        </div>
+      );
+    }
     return (
      <Router>
       <div className="App Site">
@@ -52,7 +72,7 @@ class App extends Component {
               <Header />
              </div>
              <Signin getUser={this.getUser}/>
-           <div className="main">
+            <div className="main">
               <Main />
             </div>
           </div>
