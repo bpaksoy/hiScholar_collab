@@ -5,14 +5,14 @@ const FooterSect = () =>{
   return (
   <div>
     <Footer id="page-footer">
-        <div class="row">
-          <div class="col s12" id="footerContent">
-            <h6 class="white-text">HiScholar.com</h6>
+        <div className="row">
+          <div className="col s12" id="footerContent">
+            <h6 className="white-text">HiScholar.com</h6>
           </div>
         </div>
         <div id="footer-copyright">
-          <div class="row">
-            <div class="col s12">
+          <div className="row">
+            <div className="col s12">
               © 2017 BRSS
             </div>
           </div>
