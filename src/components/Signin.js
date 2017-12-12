@@ -1,10 +1,11 @@
 import React from "react";
 
-class User extends React.Component{
+class Signin extends React.Component{
 
   constructor(props){
    super(props);
     this.state={
+      getUser: props.getUser
     }
   }
 
@@ -15,13 +16,15 @@ class User extends React.Component{
    let text= e.target.value;
    this.setState({
      [name]: value,
-     [text]: value
    })
-  console.log("this is state ", this.state);
+   console.log("this is state ", this.state);
  }
 
  handleSubmit=(e)=>{
-  this.setState({text:""})
+   e.preventDefault();
+   console.log("get User", this.state.getUser)
+  this.state.getUser(this.state.username)
+  this.setState({})
  }
 
   render(){
@@ -38,4 +41,4 @@ class User extends React.Component{
 }
 
 
-export default User;
+export default Signin;
