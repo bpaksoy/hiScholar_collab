@@ -71,8 +71,6 @@ class App extends Component {
             <div className="App-header">
               <Header />
              </div>
-             <Route path="/sign_in" component={Signin}/>
-             <Route path="/profile" component={Profile}/>
              <Signin getUser={this.getUser}/>
              <Profile user={this.state.UserInfo}/>
              <div className="main">
