@@ -7,7 +7,7 @@ const Profile =({user})=>{
 
   return(
    <div>
-      <h1>Hello!!</h1>
+      <h1>Hello to Profile!!</h1>
    </div>
   );
 }

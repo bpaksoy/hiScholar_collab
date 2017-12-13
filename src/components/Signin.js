@@ -1,4 +1,8 @@
 import React from "react";
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import Home from "./Home";
+import Signup from "./Signup";
+import {Navbar} from "react-materialize";
 
 class Signin extends React.Component{
 
@@ -15,7 +19,6 @@ class Signin extends React.Component{
      const urlUsers = 'http://localhost:5050/users';
      const requestMessages = await fetch(urlUsers)
      const users =  await requestMessages.json()
-
      this.setState({users: users})
 
   }
@@ -27,6 +30,7 @@ class Signin extends React.Component{
    let text= e.target.value;
    this.setState({
      [name]: value,
+     [text]:value
    })
    console.log("this is state ", this.state);
  }
@@ -49,23 +53,38 @@ class Signin extends React.Component{
 
   }
 
+
  handleSubmit=(e)=>{
    e.preventDefault();
    console.log("get User", this.state.getUser)
-  this.getUser(this.state.username)
-  this.setState({})
+  this.getUser(this.state.username);
+  this.setState({text:""})
  }
 
   render(){
    return(
-    <div>
+   <Router>
+      <div>
+        <Navbar className="navigation">
+          <div className="nav-wrapper">
+            <a href="/" className="brand-logo">HiScholar</a>
+            <ul>
+              <li><Link to="/sign_up">Signup</Link></li>
+            </ul>
+           <hr/>
+             <Route exact path="/" component={Home}/>
+             <Route path="/sign_up" component={Signup}/>
+         </div>
+        </Navbar>
+
      <h2>This is Signin</h2>
      <form onSubmit={this.handleSubmit}>
-      <input value={this.state.text} username="text" name="username" onChange={this.handleChange}/>
-      <input value={this.state.text} password="number" name="password" onChange={this.handleChange}/>
-      <button type="submit">Submit</button>
+        <input value={this.state.text} type="text" name="username" onChange={this.handleChange}/>
+        <input value={this.state.text} type="number" name="password" onChange={this.handleChange}/>
+        <button type="submit">Submit</button>
      </form>
-    </div>
+      </div>
+    </Router>
    );
  }
 }

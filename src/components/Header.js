@@ -1,9 +1,10 @@
 import React from "react";
 import {Navbar} from "react-materialize";
-
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 const Header = () =>{
   return (
+  <Router>
     <div>
       <Navbar className="navigation">
         <div className="nav-wrapper">
@@ -15,6 +16,7 @@ const Header = () =>{
        </div>
       </Navbar>
     </div>
+   </Router>
   );
 }
 
