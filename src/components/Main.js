@@ -18,6 +18,7 @@ const Main = () => {
         <Route exact path="/" component={Home}/>
         <Route path="/sign_in" component={Signin}/>
         <Route path="/sign_up" component={Signup}/>
+        <Route path="/profile" component={Profile}/>
      </div>
     </Router>
   );

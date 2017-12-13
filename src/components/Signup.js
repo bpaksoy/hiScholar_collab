@@ -50,9 +50,6 @@ class Signup extends React.Component{
         <Navbar className="navigation">
           <div className="nav-wrapper">
             <a href="/" className="brand-logo">HiScholar</a>
-            <ul>
-              <li><Link to="/sign_in">Signin</Link></li>
-            </ul>
            <hr/>
              <Route exact path="/" component={Home}/>
              <Route path="/sign_in" component={Signin}/>

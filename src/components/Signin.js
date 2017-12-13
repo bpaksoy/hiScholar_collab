@@ -1,7 +1,8 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route, Link } from 'react-router-dom';
 import Home from "./Home";
 import Signup from "./Signup";
+import Profile from "./Profile"
 import {Navbar} from "react-materialize";
 
 class Signin extends React.Component{
@@ -9,6 +10,7 @@ class Signin extends React.Component{
   constructor(props){
    super(props);
     this.state={
+      signedIn : false,
       users:[],
       userInfo: []
       //getUser: props.getUser
@@ -32,8 +34,10 @@ class Signin extends React.Component{
      [name]: value,
      [text]:value
    })
+   this.getUser(this.state.username);
    console.log("this is state ", this.state);
  }
+
 
  getUser = (username) => {
    console.log("HAHAHH username is ", username);
@@ -44,7 +48,8 @@ class Signin extends React.Component{
       id = users[i].id;
     }
   }
-    fetch("http://localhost:5050/users/" + id + "/profile")
+  let profileLink = "http://localhost:5050/users/" + id + "/profile"
+    fetch(profileLink)
     .then(response => response.json())
        .then(user => {console.log(user)
         this.setState({userInfo: user})
@@ -56,36 +61,42 @@ class Signin extends React.Component{
 
  handleSubmit=(e)=>{
    e.preventDefault();
-   console.log("get User", this.state.getUser)
-  this.getUser(this.state.username);
-  this.setState({text:""})
+  if(this.state.userInfo.data.length){
+    this.setState({signedIn: true})
+  }
+  this.setState({})
  }
 
   render(){
-   return(
-   <Router>
-      <div>
-        <Navbar className="navigation">
-          <div className="nav-wrapper">
-            <a href="/" className="brand-logo">HiScholar</a>
-            <ul>
-              <li><Link to="/sign_up">Signup</Link></li>
-            </ul>
-           <hr/>
-             <Route exact path="/" component={Home}/>
-             <Route path="/sign_up" component={Signup}/>
-         </div>
-        </Navbar>
+    console.log("status of signin", this.state.signedIn)
+      if(this.state.signedIn){
+         const user_name = this.state.userInfo.profile.name;
+         const userInfo = this.state.userInfo
+          return(
+              <Profile name={user_name} userInfo={userInfo}/>
+          );
+    }
+     return(
+     <Router>
+        <div>
+          <Navbar className="navigation">
+            <div className="nav-wrapper">
+              <a href="/" className="brand-logo">HiScholar</a>
+             <hr/>
+               <Route exact path="/" component={Home}/>
+               <Route path="/sign_up" component={Signup}/>
+           </div>
+          </Navbar>
 
-     <h2>This is Signin</h2>
-     <form onSubmit={this.handleSubmit}>
-        <input value={this.state.text} type="text" name="username" onChange={this.handleChange}/>
-        <input value={this.state.text} type="number" name="password" onChange={this.handleChange}/>
-        <button type="submit">Submit</button>
-     </form>
-      </div>
-    </Router>
-   );
+       <h2>This is Signin</h2>
+       <form onSubmit={this.handleSubmit}>
+          <input value={this.state.text} type="text" name="username" onChange={this.handleChange}/>
+          <input value={this.state.text} type="number" name="password" onChange={this.handleChange}/>
+          <button type="submit">Submit</button>
+       </form>
+        </div>
+      </Router>
+     );
  }
 }
 
