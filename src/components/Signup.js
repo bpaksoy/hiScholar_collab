@@ -8,40 +8,73 @@ class Signup extends React.Component{
 
   constructor(props){
    super(props);
-    this.state={
+    this.state = {
       users:[],
     }
   }
 
-  async  componentDidMount(){
+  async componentDidMount(){
      const urlUsers = 'http://localhost:5050/users';
      const requestMessages = await fetch(urlUsers)
      const users =  await requestMessages.json()
      this.setState({users: users})
   }
 
- handleChange = (e) =>{
+ // handleChange = (e) => {
+ //   e.preventDefault();
+ //   let name = e.target.name;
+ //   let value= e.target.value;
+ //   let text= e.target.value;
+ //   this.setState({
+ //     [name]: value,
+ //     [text]:value
+ //   })
+ //   console.log("this is state ", this.state);
+ // }
+
+ postUser = (e) => {
    e.preventDefault();
-   let name = e.target.name;
-   let value= e.target.value;
-   let text= e.target.value;
-   this.setState({
-     [name]: value,
-     [text]:value
-   })
-   console.log("this is state ", this.state);
+   const postUrl = "http://localhost:5050/sign_up";
+  let myHeaders = new Headers({
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
+  })
+  let username = document.getElementById('username').value;
+  let email = document.getElementById('email').value;
+  let password = document.getElementById('password').value;
+  let user = {
+    username: username,
+    email: email,
+    hashed_password: password
+  }
+  console.log(user);
+
+  fetch(postUrl, {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(user)
+  })
+  .then(response => {
+    let contentType = response.headers.get("Content-Type")
+    if(contentType && contentType.includes("application/json")) {
+      return response.json()
+    } else {
+      throw new TypeError("Oops, we haven't got JSON!")
+    }
+  })
+  .then(userData => {
+    this.setState({ users: [...this.state.users, userData] })
+    console.log(userData)
+  })
+  .catch(err => console.log(err));
  }
 
- postUser = () => {
 
- }
-
-
- handleSubmit=(e)=>{
-   e.preventDefault();
-   console.log("get User", this.state.getUser)
-  this.setState({text:""})
- }
+ // handleSubmit=(e)=>{
+ //  e.preventDefault();
+ //  console.log("get User", this.state.getUser)
+ //  this.setState({text:""})
+ // }
 
   render(){
    return(
@@ -57,11 +90,14 @@ class Signup extends React.Component{
         </Navbar>
 
      <h2>This is Signup</h2>
-     <form onSubmit={this.handleSubmit}>
-      <input value={this.state.text} type="text"  name="username" onChange={this.handleChange} placeholder="username"/>
-      <input value={this.state.text} type="email"  name="email" onChange={this.handleChange} placeholder="email"/>
-      <input value={this.state.text} type="number" name="password" onChange={this.handleChange} placeholder="password"/>
-      <input value={this.state.text} type="number" name="repeat-password" onChange={this.handleChange} placeholder="repeat-password"/>
+     <form onSubmit={
+       // this.handleSubmit
+       this.postUser
+     }>
+      <input id="username" type="text"  name="username" onChange={this.handleChange} placeholder="username"/>
+      <input id="email" type="email"  name="email" onChange={this.handleChange} placeholder="email"/>
+      <input id="password" type="number" name="password" onChange={this.handleChange} placeholder="password"/>
+      <input type="number" name="repeat-password" onChange={this.handleChange} placeholder="repeat-password"/>
       <button type="submit">Submit</button>
      </form>
     </div>
