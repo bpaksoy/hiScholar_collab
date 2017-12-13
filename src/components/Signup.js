@@ -2,6 +2,8 @@ import React from "react";
 import Home from "./Home";
 import Signin from "./Signin";
 import {Navbar} from "react-materialize";
+import UserInfo from './UserInfo';
+
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 class Signup extends React.Component{
@@ -10,6 +12,8 @@ class Signup extends React.Component{
    super(props);
     this.state = {
       users:[],
+      user: {},
+      signedUp: false
     }
   }
 
@@ -47,8 +51,7 @@ class Signup extends React.Component{
     email: email,
     hashed_password: password
   }
-  console.log(user);
-
+  console.log("this is user", user);
   fetch(postUrl, {
     method: 'POST',
     headers: myHeaders,
@@ -63,8 +66,8 @@ class Signup extends React.Component{
     }
   })
   .then(userData => {
-    this.setState({ users: [...this.state.users, userData] })
-    console.log(userData)
+    this.setState({ users: [...this.state.users, userData], signedUp: true })
+    console.log("this is userData", userData)
   })
   .catch(err => console.log(err));
  }
@@ -77,6 +80,11 @@ class Signup extends React.Component{
  // }
 
   render(){
+   if(this.state.signedUp){
+     return(
+        <UserInfo users={this.state.users}/>
+     );
+   }
    return(
     <Router>
       <div>
