@@ -23,6 +23,8 @@ class Signin extends React.Component{
      const users =  await requestMessages.json()
      this.setState({users: users})
 
+     console.log("steph users here", users);
+
   }
 
  handleChange = (e) =>{

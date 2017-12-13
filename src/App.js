@@ -43,23 +43,6 @@ class App extends Component {
 
 
   render() {
-    // console.log("this.state.userInfo", this.state.userInfo);
-    // if(this.state.userInfo.length){
-    //   return(
-    //     <div className="App Site">
-    //         <div className="Site-content">
-    //           <div className="App-header">
-    //             <Header/>
-    //           </div>
-    //             <div className="main">
-    //               <Main />
-    //             </div>
-    //              <Profile user={this.state.userInfo}/>
-    //         </div>
-    //       <Footer/>
-    //     </div>
-    //   );
-    // }
     return (
       <div className="App Site">
           <div className="Site-content">

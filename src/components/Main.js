@@ -3,6 +3,7 @@ import Signin from "./Signin";
 import Profile from "./Profile";
 import Signup from "./Signup";
 import Home from "./Home";
+import UserInfo from "./UserInfo";
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 const Main = () => {
@@ -19,6 +20,7 @@ const Main = () => {
         <Route path="/sign_in" component={Signin}/>
         <Route path="/sign_up" component={Signup}/>
         <Route path="/profile" component={Profile}/>
+        <Route path="/user_info" component={UserInfo}/>
      </div>
     </Router>
   );
