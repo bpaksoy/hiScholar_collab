@@ -10,6 +10,7 @@ class Signup extends React.Component{
    super(props);
     this.state = {
       users:[],
+      signedUp: false
     }
   }
 
@@ -34,7 +35,7 @@ class Signup extends React.Component{
 
  postUser = (e) => {
    e.preventDefault();
-   const postUrl = "http://localhost:5050/sign_up";
+  const postUrl = "http://localhost:5050/sign_up";
   let myHeaders = new Headers({
     Accept: 'application/json',
     'Content-Type': 'application/json'
@@ -63,7 +64,10 @@ class Signup extends React.Component{
     }
   })
   .then(userData => {
-    this.setState({ users: [...this.state.users, userData] })
+    this.setState({
+      users: [...this.state.users, userData],
+      signedUp: true
+     })
     console.log(userData)
   })
   .catch(err => console.log(err));
