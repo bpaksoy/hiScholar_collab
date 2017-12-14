@@ -8,9 +8,9 @@ class UserInfo extends React.Component{
     this.state ={
       formFilled: false,
       users: props.users,
-      userInfo: {}
+      userInfo: []
     }
-      //const lastUser = this.state.users[this.state.users.length -1];
+
       //console.log("show this.state.users show meeeeee", this.state.users);
       console.log("this is the users", this.state.users);
   }
@@ -57,9 +57,10 @@ class UserInfo extends React.Component{
   postProfile = (e) => {
     e.preventDefault();
 
-    const users = this.state.users;
-    let id = users[users.length-1].id;
-    const postUrl = 'http://localhost:5050/profile';
+    let users = this.state.users;
+    let lastUser = users[users.length -1];
+    let id = lastUser.id;
+    const postUrl = "http://localhost:5050/users/" + id ;
 
     let myHeaders = new Headers({
       Accept: 'application/json',
@@ -79,7 +80,7 @@ class UserInfo extends React.Component{
     }
 
    this.setState({
-     userInfo : userProfile
+     userInfo : [...this.state.userInfo, userProfile]
    })
      console.log("this.state.userInfo", this.state.userInfo);
 
@@ -101,13 +102,13 @@ class UserInfo extends React.Component{
       this.setState({
         formFilled: true,
        })
-
+     console.log("formfilled", this.state.formFilled)
     })
     .catch(err => console.log(err));
   }
 
  render(){
-   if(this.state.formfilled){
+   if(this.state.userInfo.length){
      return(
        <Profile userInfo={this.state.userInfo}/>
      )
