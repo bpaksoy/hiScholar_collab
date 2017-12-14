@@ -1,14 +1,14 @@
 import React from "react";
-import Signin from "./Signin";
-import Profile from "./Profile";
-import Signup from "./Signup";
-import Home from "./Home";
-import UserInfo from "./UserInfo";
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-
+import Signin from "./pages/Signin";
+import Profile from "./pages/Profile";
+import Signup from "./pages/Signup";
+import Home from "./pages/Home";
+import UserInfo from "./pages/UserInfo";
+import { BrowserRouter as Router, Route, Link, IndexRoute } from "react-router-dom";
+import createHistory from "history/lib/createHashHistory";
 const Main = () => {
   return(
-    <Router>
+    <Router history={createHistory()}>
      <div>
        <ul>
          <li><Link to="/">Home</Link></li>
