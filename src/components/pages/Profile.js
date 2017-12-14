@@ -1,5 +1,5 @@
 import React from "react";
-import {Col, Card} from "react-materialize";
+// import {Col, Card} from "react-materialize";
 
 const Profile =({name, userInfo})=>{
   console.log("this is userInfo:", userInfo);

@@ -10,7 +10,7 @@ class UserInfo extends React.Component{
       users: props.users,
       userInfo: {}
     }
-      const lastUser = this.state.users[this.state.users.length -1];
+      //const lastUser = this.state.users[this.state.users.length -1];
       //console.log("show this.state.users show meeeeee", this.state.users);
       console.log("this is the users", this.state.users);
   }

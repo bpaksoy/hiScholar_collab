@@ -4,7 +4,7 @@ import Signin from "./Signin";
 import {Navbar} from "react-materialize";
 import UserInfo from './UserInfo';
 
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route} from 'react-router-dom';
 
 class Signup extends React.Component{
 
