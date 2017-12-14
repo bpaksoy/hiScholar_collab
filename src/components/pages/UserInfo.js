@@ -59,7 +59,7 @@ class UserInfo extends React.Component{
 
     const users = this.state.users;
     let id = users[users.length-1].id;
-    const postUrl = 'http://localhost:5050/users/' + id + "/profile";
+    const postUrl = 'http://localhost:5050/profile';
 
     let myHeaders = new Headers({
       Accept: 'application/json',
