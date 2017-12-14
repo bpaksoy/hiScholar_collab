@@ -12,7 +12,7 @@ class UserInfo extends React.Component{
     }
       const lastUser = this.state.users[this.state.users.length -1];
       //console.log("show this.state.users show meeeeee", this.state.users);
-      console.log("this is the last user", lastUser);
+      console.log("this is the users", this.state.users);
   }
 
 
@@ -56,7 +56,10 @@ class UserInfo extends React.Component{
 
   postProfile = (e) => {
     e.preventDefault();
-    const postUrl = 'http://localhost:5050/profile';
+
+    const users = this.state.users;
+    let id = users[users.length-1].id;
+    const postUrl = 'http://localhost:5050/users/' + id + "/profile";
 
     let myHeaders = new Headers({
       Accept: 'application/json',
@@ -88,6 +91,7 @@ class UserInfo extends React.Component{
     .then(response => {
       let contentType = response.headers.get("Content-Type")
       if(contentType && contentType.includes("application/json")) {
+        console.log(response.json());
         return response.json()
       } else {
         throw new TypeError("Oops, we haven't got JSON!")
@@ -105,7 +109,7 @@ class UserInfo extends React.Component{
  render(){
    if(this.state.formfilled){
      return(
-       <Profile userInf0={this.state.userInfo}/>
+       <Profile userInfo={this.state.userInfo}/>
      )
    }
    return(
@@ -134,7 +138,5 @@ class UserInfo extends React.Component{
  }
 
 }
-
-
 
 export default UserInfo;

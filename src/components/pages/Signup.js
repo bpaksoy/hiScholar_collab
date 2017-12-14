@@ -65,7 +65,8 @@ class Signup extends React.Component{
     }
   })
   .then(userData => {
-    this.setState({ users: [...this.state.users, userData], signedUp: true })
+   const lastUser= userData[userData.length -1];
+    this.setState({ users: [...this.state.users, lastUser], signedUp: true })
     console.log("this is list of users", this.state.users)
   })
   .catch(err => console.log(err));
