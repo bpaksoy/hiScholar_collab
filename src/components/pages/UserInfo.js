@@ -1,4 +1,5 @@
 import React from "react";
+import Profile from "./Profile"
 // import {Navbar} from "react-materialize";
 
 class UserInfo extends React.Component{
@@ -102,6 +103,11 @@ class UserInfo extends React.Component{
   }
 
  render(){
+   if(this.state.formfilled){
+     return(
+       <Profile userInf0={this.state.userInfo}/>
+     )
+   }
    return(
     <div>
     <form onSubmit={this.postProfile}>
