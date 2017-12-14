@@ -5,9 +5,15 @@ class UserInfo extends React.Component{
   constructor(props){
    super(props);
     this.state ={
-      formFilled: false
+      formFilled: false,
+      users: props.users,
+      userInfo: {}
     }
+      const lastUser = this.state.users[this.state.users.length -1];
+      //console.log("show this.state.users show meeeeee", this.state.users);
+      console.log("this is the last user", lastUser);
   }
+
 
   // handleChange = (e) =>{
   //   e.preventDefault();
@@ -50,6 +56,7 @@ class UserInfo extends React.Component{
   postProfile = (e) => {
     e.preventDefault();
     const postUrl = 'http://localhost:5050/profile';
+
     let myHeaders = new Headers({
       Accept: 'application/json',
       'Content-Type': 'application/json'
@@ -66,7 +73,11 @@ class UserInfo extends React.Component{
       ielts: e.target.ielts.value,
       sat: e.target.sat.value
     }
-    console.log(userProfile);
+
+   this.setState({
+     userInfo : userProfile
+   })
+     console.log("this.state.userInfo", this.state.userInfo);
 
     fetch(postUrl, {
       method: 'POST',
@@ -83,15 +94,14 @@ class UserInfo extends React.Component{
     })
     .then(userData => {
       this.setState({
-        formFilled: true
+        formFilled: true,
        })
-      console.log(userData)
+
     })
     .catch(err => console.log(err));
   }
 
  render(){
-
    return(
     <div>
     <form onSubmit={this.postProfile}>
@@ -116,8 +126,6 @@ class UserInfo extends React.Component{
     </div>
    );
  }
-
-
 
 }
 

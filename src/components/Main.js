@@ -4,8 +4,9 @@ import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 import UserInfo from "./pages/UserInfo";
-import { BrowserRouter as Router, Route, Link, IndexRoute } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import createHistory from "history/lib/createHashHistory";
+
 const Main = () => {
   return(
     <Router history={createHistory()}>

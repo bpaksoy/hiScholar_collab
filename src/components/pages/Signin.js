@@ -63,7 +63,7 @@ class Signin extends React.Component{
 
  handleSubmit=(e)=>{
    e.preventDefault();
-  if(this.state.userInfo.data.length){
+  if(this.state.userInfo){
     this.setState({signedIn: true})
   }
   this.setState({})
@@ -72,10 +72,12 @@ class Signin extends React.Component{
   render(){
     console.log("status of signin", this.state.signedIn)
       if(this.state.signedIn){
-         const user_name = this.state.userInfo.profile.name;
-         const userInfo = this.state.userInfo
+         // const user_name = this.state.userInfo.profile.name;
+         // const userInfo = this.state.userInfo
           return(
-              <Profile name={user_name} userInfo={userInfo}/>
+            <Link to="/profile">
+              <Profile />
+            </Link>
           );
     }
      return(

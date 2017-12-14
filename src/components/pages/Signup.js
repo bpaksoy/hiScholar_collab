@@ -12,7 +12,6 @@ class Signup extends React.Component{
    super(props);
     this.state = {
       users:[],
-      user: {},
       signedUp: false
     }
   }
@@ -46,16 +45,16 @@ class Signup extends React.Component{
   let username = document.getElementById('username').value;
   let email = document.getElementById('email').value;
   let password = document.getElementById('password').value;
-  let user = {
+  let newUser = {
     username: username,
     email: email,
     hashed_password: password
   }
-  console.log("this is user", user);
+
   fetch(postUrl, {
     method: 'POST',
     headers: myHeaders,
-    body: JSON.stringify(user)
+    body: JSON.stringify(newUser)
   })
   .then(response => {
     let contentType = response.headers.get("Content-Type")
@@ -67,7 +66,7 @@ class Signup extends React.Component{
   })
   .then(userData => {
     this.setState({ users: [...this.state.users, userData], signedUp: true })
-    console.log("this is userData", userData)
+    console.log("this is list of users", this.state.users)
   })
   .catch(err => console.log(err));
  }
