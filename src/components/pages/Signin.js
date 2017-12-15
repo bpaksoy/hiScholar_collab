@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Home from "./Home";
-import Signup from "./Signup";
+import UserInfo from "./UserInfo";
 import Profile from "./Profile"
 import {Navbar, Input} from "react-materialize";
 
@@ -12,6 +12,7 @@ class Signin extends React.Component{
     this.state={
       signedIn : false,
       users:[],
+      id:"",
       userInfo: []
       //getUser: props.getUser
     }
@@ -19,12 +20,13 @@ class Signin extends React.Component{
 
   async  componentDidMount(){
      const urlUsers = 'http://localhost:5050/users';
-     const requestMessages = await fetch(urlUsers)
-     const users =  await requestMessages.json()
-     this.setState({users: users})
-
-    // console.log("steph users here", users);
-
+     const requestUsers = await fetch(urlUsers);
+     const users =  await requestUsers.json();
+     const profileInfoLink = "http://localhost:5050/students_info";
+     const requestUserInformation = await fetch(profileInfoLink)
+     const userInfo = await requestUserInformation.json();
+      this.setState({users: users, userInfo: [...this.state.userInfo, userInfo[0]]});
+    //  console.log("PLEASE GOD SHOW IT", this.state.userInfo[0])
   }
 
  handleChange = (e) =>{
@@ -48,15 +50,15 @@ class Signin extends React.Component{
   for(var i= 0; i < users.length; i++){
     if(users[i].username === username){
       id = users[i].id;
+      this.setState({id:id})
     }
   }
-  let profileLink = "http://localhost:5050/users/" + id + "/profile"
-    fetch(profileLink)
+  let usersLink = "http://localhost:5050/users/" + id + "/profile";
+    fetch(usersLink)
     .then(response => response.json())
        .then(user => {console.log(user)
-        this.setState({userInfo: user,
-        })
-       console.log("this.state.userInfo pissssttt", this.state.userInfo);
+        // this.setState({userInfo: [...this.state.userInfo, user],
+        // })
      })
 
   }
@@ -64,10 +66,9 @@ class Signin extends React.Component{
 
  handleSubmit=(e)=>{
    e.preventDefault();
-  if(this.state.userInfo){
-    this.setState({signedIn: true,  id: this.state.userInfo.user.id})
+  if(this.state.userInfo.length){
+    this.setState({signedIn: true})
   }
-
  }
 
   render(){
@@ -92,7 +93,6 @@ class Signin extends React.Component{
               <a href="/" className="brand-logo">HiScholar</a>
              <hr/>
                <Route exact path="/" component={Home}/>
-               <Route path="/sign_up" component={Signup}/>
            </div>
           </Navbar>
 
