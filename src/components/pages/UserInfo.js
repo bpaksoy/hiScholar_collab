@@ -6,16 +6,17 @@ import { BrowserRouter as Router } from "react-router-dom";
 class UserInfo extends React.Component{
   constructor(props){
    super(props);
-    this.state ={
+    this.state = {
       formFilled: false,
       users: props.users,
-      userInfo: []
+      userInfo: [],
+      personalStatements: [],
+      hasPersonalStatement: false
     }
 
       //console.log("show this.state.users show meeeeee", this.state.users);
       console.log("this is the users", this.state.users);
   }
-
 
   // handleChange = (e) =>{
   //   e.preventDefault();
@@ -64,7 +65,7 @@ class UserInfo extends React.Component{
     const postUrl = "http://localhost:5050/users/" + id ;
 
     let myHeaders = new Headers({
-      Accept: 'application/json',
+      'Accept': 'application/json',
       'Content-Type': 'application/json'
     })
     let profile = {
@@ -108,38 +109,98 @@ class UserInfo extends React.Component{
     .catch(err => console.log(err));
   }
 
+  postPersonalStatement = (e) => {
+    e.preventDefault();
+
+    let users = this.state.users;
+    let lastUser = users[users.length -1];
+    let id = lastUser.id;
+
+    const postUrl = "http://localhost:5050/users/statement";
+    let myHeaders = new Headers({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    })
+    let personalStatement = {
+      title: e.target.title.value,
+      post: e.target.post.value
+    }
+
+    this.setState({ personalStatements: [...this.state.personalStatements, personalStatement] })
+    console.log("Your personal statement is : ", this.state.personalStatement)
+
+    fetch(postUrl, {
+      method: 'POST',
+      headers: myHeaders,
+      body: JSON.stringify(personalStatement)
+    })
+    .then(response => {
+      let contentType = response.headers.get("Content-Type")
+      if(contentType && contentType.includes("application/json")) {
+        console.log(response.json());
+        return response.json()
+      } else {
+        throw new TypeError("Oops, we haven't got JSON!")
+      }
+    })
+    .then(userStatement => {
+      this.setState({
+        hasPersonalStatement: true
+      })
+      console.log(userStatement);
+    })
+  }
+
+
  render(){
    console.log("userInfo in the userINFO COMP", this.state.userInfo)
-   if(this.state.userInfo.length){
-     return(
-       <Profile userInfo={this.state.userInfo}/>
-     )
-   }
-   return(
-   <div>
-    <form onSubmit={this.postProfile}>
-       <div className="col s6">
-           <input type="text" placeholder="Name" name="first_name" onChange={this.handleChange}/>
-           <input type="text" placeholder="Last Name" name="last_name" onChange={this.handleChange}/>
-           <input type="text" placeholder="Country" name="country" onChange={this.handleChange}/>
-           <input type="text" placeholder="City" name="city" onChange={this.handleChange}/>
-           <input type="text" placeholder="State if applicable" name="state" onChange={this.handleChange}/>
-       </div>
-         <div className="col s6">
-           <input name="alma_mater" type="text" placeholder="alma mater here" onChange={this.handleChange}/>
-           <input name="gpa" type="number" placeholder="GPA" onChange={this.handleChange}/>
-           <input name="toefl" type="number" placeholder="TOEFL" onChange={this.handleChange}/>
-           <input name="ielts" type="number"placeholder="IELTS" onChange={this.handleChange}/>
-           <input name="sat" type="number" placeholder="SAT" onChange={this.handleChange}/>
-         </div>
-         <div className="col s12">
-           <input type="submit" value="Submit"/>
-         </div>
-      </form>
-    </div>
-   );
- }
+   console.log("personal statement title: ", this.state.personalStatements.title)
+   console.log("personal statement post: ", this.state.personalStatements.post)
 
+   if(this.state.userInfo.length){
+     return (
+       <div>
+         <Profile userInfo={this.state.userInfo} personalStatements={this.state.personalStatements} personalStatementTitle={this.state.personalStatements.title} personalStatementPost={this.state.personalStatements.post} />
+
+         <div className="personalStatementForm">
+           <form onSubmit={this.postPersonalStatement}>
+             <div className="col s6">
+             <input type="text" name="title" placeholder="Title Your Personal Statement Here" onChange={this.handleChange}/>
+             <input type="text" name="post" placeholder="Please enter your personal statement" onChange={this.handleChange}/>
+             </div>
+             <div className="col s12">
+               <input type="submit" value="Submit"/>
+             </div>
+           </form>
+         </div>
+      </div>
+     )
+   } else {
+     return (
+     <div>
+      <form onSubmit={this.postProfile}>
+         <div className="col s6">
+             <input type="text" placeholder="Name" name="first_name" onChange={this.handleChange}/>
+             <input type="text" placeholder="Last Name" name="last_name" onChange={this.handleChange}/>
+             <input type="text" placeholder="Country" name="country" onChange={this.handleChange}/>
+             <input type="text" placeholder="City" name="city" onChange={this.handleChange}/>
+             <input type="text" placeholder="State if applicable" name="state" onChange={this.handleChange}/>
+         </div>
+           <div className="col s6">
+             <input name="alma_mater" type="text" placeholder="alma mater here" onChange={this.handleChange}/>
+             <input name="gpa" type="number" placeholder="GPA" onChange={this.handleChange}/>
+             <input name="toefl" type="number" placeholder="TOEFL" onChange={this.handleChange}/>
+             <input name="ielts" type="number"placeholder="IELTS" onChange={this.handleChange}/>
+             <input name="sat" type="number" placeholder="SAT" onChange={this.handleChange}/>
+           </div>
+           <div className="col s12">
+             <input type="submit" value="Submit"/>
+           </div>
+        </form>
+      </div>
+     );
+   }
+ }
 }
 
 export default UserInfo;
