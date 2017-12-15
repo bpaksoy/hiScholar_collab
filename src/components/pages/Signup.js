@@ -20,7 +20,7 @@ class Signup extends React.Component{
      const urlUsers = 'http://localhost:5050/users';
      const requestMessages = await fetch(urlUsers)
      const users =  await requestMessages.json()
-     this.setState({users: users})
+     this.setState({users: users, name:""})
   }
 
  // handleChange = (e) => {
@@ -78,6 +78,10 @@ class Signup extends React.Component{
  //  console.log("get User", this.state.getUser)
  //  this.setState({text:""})
  // }
+ signUpStatus = ()=>{
+    console.log("hello signup status", this.state.signedUp)
+ }
+
 
   render(){
    if(this.state.signedUp){
@@ -86,8 +90,9 @@ class Signup extends React.Component{
      );
    }
    return(
+
     <Router>
-      <div>
+      <div style={{color:"#1E90FF"}}>
         <Navbar className="navigation">
           <div className="nav-wrapper">
             <a href="/" className="brand-logo">HiScholar</a>
@@ -104,10 +109,11 @@ class Signup extends React.Component{
      }>
       <input id="username" type="text"  name="username" onChange={this.handleChange} placeholder="username"/>
       <input id="email" type="email"  name="email" onChange={this.handleChange} placeholder="email"/>
-      <input id="password" type="number" name="password" onChange={this.handleChange} placeholder="password"/>
-      <input type="number" name="repeat-password" onChange={this.handleChange} placeholder="repeat-password"/>
+      <input id="password" type="password" name="password" onChange={this.handleChange} placeholder="password"/>
+      <input type="password" name="repeat-password" onChange={this.handleChange} placeholder="repeat-password"/>
       <button type="submit">Submit</button>
      </form>
+     <br/>
     </div>
    </Router>
    );

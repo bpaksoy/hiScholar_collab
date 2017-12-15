@@ -56,7 +56,7 @@ class Signin extends React.Component{
        .then(user => {console.log(user)
         this.setState({userInfo: user,
         })
-       console.log("this.state.userInfo pissssttt", this.state.userInfo.user.id);
+       console.log("this.state.userInfo pissssttt", this.state.userInfo);
      })
 
   }
@@ -86,7 +86,7 @@ class Signin extends React.Component{
     }
      return(
      <Router>
-        <div>
+        <div style={{color:"#1E90FF"}}>
           <Navbar className="navigation">
             <div className="nav-wrapper">
               <a href="/" className="brand-logo">HiScholar</a>
@@ -99,7 +99,7 @@ class Signin extends React.Component{
          <h2>This is Signin</h2>
            <form onSubmit={this.handleSubmit}>
               <Input s={6} value={this.state.text} type="text" name="username" onChange={this.handleChange}/>
-              <Input s={6} value={this.state.text} type="number" name="password" onChange={this.handleChange}/>
+              <Input s={6} value={this.state.text} type="password" name="password" onChange={this.handleChange}/>
               <button type="submit">Submit</button>
            </form>
         </div>

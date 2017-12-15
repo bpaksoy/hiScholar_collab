@@ -1,5 +1,6 @@
 import React from "react";
 import Profile from "./Profile"
+import { BrowserRouter as Router } from "react-router-dom";
 // import {Navbar} from "react-materialize";
 
 class UserInfo extends React.Component{
@@ -66,7 +67,7 @@ class UserInfo extends React.Component{
       Accept: 'application/json',
       'Content-Type': 'application/json'
     })
-    let userProfile = {
+    let profile = {
       first_name: e.target.first_name.value,
       last_name: e.target.last_name.value,
       country: e.target.country.value,
@@ -80,14 +81,14 @@ class UserInfo extends React.Component{
     }
 
    this.setState({
-     userInfo : [...this.state.userInfo, userProfile]
+     userInfo : [...this.state.userInfo, profile]
    })
-     console.log("this.state.userInfo", this.state.userInfo);
+     console.log("this.state.userInfo WHERE ARE YOU???", this.state.userInfo);
 
     fetch(postUrl, {
       method: 'POST',
       headers: myHeaders,
-      body: JSON.stringify(userProfile)
+      body: JSON.stringify(profile)
     })
     .then(response => {
       let contentType = response.headers.get("Content-Type")
@@ -108,13 +109,14 @@ class UserInfo extends React.Component{
   }
 
  render(){
+   console.log("userInfo in the userINFO COMP", this.state.userInfo)
    if(this.state.userInfo.length){
      return(
        <Profile userInfo={this.state.userInfo}/>
      )
    }
    return(
-    <div>
+   <div>
     <form onSubmit={this.postProfile}>
        <div className="col s6">
            <input type="text" placeholder="Name" name="first_name" onChange={this.handleChange}/>

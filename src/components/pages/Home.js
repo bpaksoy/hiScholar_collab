@@ -7,7 +7,7 @@ import Signup from "./Signup";
 const Home =()=>{
   return(
     <Router>
-       <div>
+       <div style={{color:"#1E90FF"}}>
          <Navbar className="navigation">
            <div className="nav-wrapper">
              <a href="/" className="brand-logo">HiScholar</a>
