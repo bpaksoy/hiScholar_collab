@@ -20,7 +20,7 @@ const Main = () => {
         <Route exact path="/" component={Home}/>
         <Route path="/sign_in" component={Signin}/>
         <Route path="/sign_up" component={Signup}/>
-        <Route path="/profile" component={Profile}/>
+        <Route path="/:id/profile" component={Profile}/>
         <Route path="/user_info" component={UserInfo}/>
      </div>
     </Router>

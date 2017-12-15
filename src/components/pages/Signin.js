@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Home from "./Home";
 import Signup from "./Signup";
 import Profile from "./Profile"
-import {Navbar} from "react-materialize";
+import {Navbar, Input} from "react-materialize";
 
 class Signin extends React.Component{
 
@@ -23,7 +23,7 @@ class Signin extends React.Component{
      const users =  await requestMessages.json()
      this.setState({users: users})
 
-     console.log("steph users here", users);
+    // console.log("steph users here", users);
 
   }
 
@@ -37,12 +37,12 @@ class Signin extends React.Component{
      [text]:value
    })
    this.getUser(this.state.username);
-   console.log("this is state ", this.state);
+  // console.log("this is state ", this.state);
  }
 
 
  getUser = (username) => {
-   console.log("HAHAHH username is ", username);
+//   console.log("HAHAHH username is ", username);
   const users = this.state.users;
   let id;
   for(var i= 0; i < users.length; i++){
@@ -54,8 +54,9 @@ class Signin extends React.Component{
     fetch(profileLink)
     .then(response => response.json())
        .then(user => {console.log(user)
-        this.setState({userInfo: user})
-        console.log("this.state.userInfo", this.state.userInfo);
+        this.setState({userInfo: user,
+        })
+       console.log("this.state.userInfo pissssttt", this.state.userInfo.user.id);
      })
 
   }
@@ -64,19 +65,22 @@ class Signin extends React.Component{
  handleSubmit=(e)=>{
    e.preventDefault();
   if(this.state.userInfo){
-    this.setState({signedIn: true})
+    this.setState({signedIn: true,  id: this.state.userInfo.user.id})
   }
-  this.setState({})
+
  }
 
   render(){
-    console.log("status of signin", this.state.signedIn)
+   console.log("status of signin id", this.state.id)
+   const userId = this.state.id
+  //  console.log("here is the path", `/${userId}/profile`)
       if(this.state.signedIn){
          // const user_name = this.state.userInfo.profile.name;
          // const userInfo = this.state.userInfo
+         const path = `/${userId}/profile`;
           return(
-            <Link to="/profile">
-              <Profile />
+            <Link to={path}>
+              <Profile userInfo={this.state.userInfo}/>
             </Link>
           );
     }
@@ -92,12 +96,12 @@ class Signin extends React.Component{
            </div>
           </Navbar>
 
-       <h2>This is Signin</h2>
-       <form onSubmit={this.handleSubmit}>
-          <input value={this.state.text} type="text" name="username" onChange={this.handleChange}/>
-          <input value={this.state.text} type="number" name="password" onChange={this.handleChange}/>
-          <button type="submit">Submit</button>
-       </form>
+         <h2>This is Signin</h2>
+           <form onSubmit={this.handleSubmit}>
+              <Input s={6} value={this.state.text} type="text" name="username" onChange={this.handleChange}/>
+              <Input s={6} value={this.state.text} type="number" name="password" onChange={this.handleChange}/>
+              <button type="submit">Submit</button>
+           </form>
         </div>
       </Router>
      );
