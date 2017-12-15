@@ -3,12 +3,12 @@ import { Collection, CollectionItem } from "react-materialize";
 
 const InfoCard = ({userInfo}) =>{
 
- const profileInfo = userInfo.profile;
+ const profileInfo = userInfo[0];
 
   return(
     <div>
        <Collection header='Personal Information'>
-         <CollectionItem>{profileInfo.name, profileInfo.last_name}</CollectionItem>
+         <CollectionItem>{profileInfo.first_name, profileInfo.last_name}</CollectionItem>
          <CollectionItem>{`${profileInfo.state}, ${profileInfo.country}`}</CollectionItem>
          <CollectionItem>{profileInfo.alma_mater}</CollectionItem>
           <CollectionItem>{`GPA: ${profileInfo.GPA}`}</CollectionItem>
